@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Vatandaş Yönlendirme Asistanı</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <h2>🧭 Vatandaş Yönlendirme Asistanı</h2>
+    <p style="text-align:center;">Herhangi bir kamu başvuru isteğini yaz, Gemini sana yol göstersin.</p>
+
+    <form method="POST">
+        <textarea name="user_input" rows="4" cols="60" placeholder="Örn: 'Engelli maaşı başvurusu yapmak istiyorum'">{{ user_input }}</textarea><br><br>
+        <button type="submit">Yönlendirme Al</button>
+    </form>
+
+    <div id="loadingText">Gemini analiz ediyor...</div>
+    <div class="loader" id="loader"></div>
+
+    {% if result %}
+        <div class="result-box" id="resultBox">
+            <h3>📄 Yönlendirme Sonucu</h3>
+            <div>{{ result | safe }}</div>
+        </div>
+    {% endif %}
+
+    <script>
+        const form = document.querySelector("form");
+        const loader = document.getElementById("loader");
+        const loadingText = document.getElementById("loadingText");
+        const resultBox = document.getElementById("resultBox");
+
+        form.addEventListener("submit", () => {
+            if (resultBox) resultBox.style.display = "none";
+            loader.style.display = "block";
+            loadingText.style.display = "block";
+        });
+    </script>
+
+</body>
+</html>
